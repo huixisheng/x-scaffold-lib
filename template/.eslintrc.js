@@ -20,6 +20,7 @@ module.exports = {
 
   },
   rules: {
+    'wrap-iife': ['error', 'any'],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // This rule warns the usage of `console`

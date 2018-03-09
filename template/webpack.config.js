@@ -7,10 +7,12 @@ const xConfig = require('x-config-deploy').getConfig();
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackConfig = require('@x-scaffold/webpack-config');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const QiniuPlugin = require('qiniu-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const IP = require('ip').address();
 const portFinderSync = require('portfinder-sync');
+const _ = require('node-plus-string');
 
 const pkg = require('./package.json');
 const PORT = portFinderSync.getPort(8080);
@@ -25,6 +27,10 @@ function resolve(dir) {
 function getProjectName() {
   return pkg.name;
 }
+
+const cleanPlugin = new CleanWebpackPlugin(['dist'], {
+  verbose: true,
+});
 
 const qiniuPluginAssets = new QiniuPlugin({
   ACCESS_KEY: xConfig.qiniuLibConfig.accessKey,
@@ -46,7 +52,7 @@ module.exports = {
     filename: `${distBasePath}/${getProjectName()}.js`,
     // chunkFilename: `[name].js`,
     publicPath: process.env.NODE_ENV === 'production' ? qiniuDomain : `//${IP}:${PORT}/`,
-    library: `${pkg.name}`,
+    library: _.camelize(pkg.name),
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
@@ -111,26 +117,28 @@ module.exports = {
     hints: false,
   },
   plugins: [
+    cleanPlugin,
     new StyleLintPlugin({
       failOnError: false,
       files: ['**/*.s?(a|c)ss', 'src/**/**/*.vue', 'src/***/*.css'],
       // files: '../static/.css'
     }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      chunks: ['index'],
-      showErrors: true,
-      hash: false,
-      inject: true,
-      chunksSortMode: 'dependency',
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: 'index.html',
+    //   chunks: ['index'],
+    //   showErrors: true,
+    //   hash: false,
+    //   inject: true,
+    //   chunksSortMode: 'dependency',
+    // }),
   ],
 };
 
 if (process.env.NODE_ENV === 'development') {
   module.exports = Object.assign(module.exports, {
-    devtool: '#eval-source-map',
+    // devtool: '#eval-source-map',
+    devtool: '#source-map',
   });
 }
 
