@@ -36,10 +36,9 @@ const qiniuPluginAssets = new QiniuPlugin({
   ACCESS_KEY: xConfig.qiniuLibConfig.accessKey,
   SECRET_KEY: xConfig.qiniuLibConfig.secretKey,
   bucket: xConfig.qiniuLibConfig.bucket,
-  path: '',
-  include: [new RegExp(distBasePath)],
   // include 可选项。你可以选择上传的文件，比如['main.js']``或者[/main/]`
-  // path: '[hash]'
+  include: [new RegExp(getProjectName())],
+  path: distBasePath,
 });
 
 module.exports = {
@@ -49,7 +48,7 @@ module.exports = {
   output: {
     hashDigestLength: 8,
     path: path.resolve(__dirname, './dist/'),
-    filename: `${distBasePath}/${getProjectName()}.js`,
+    filename: `${getProjectName()}.js`,
     // chunkFilename: `[name].js`,
     publicPath: process.env.NODE_ENV === 'production' ? qiniuDomain : `//${IP}:${PORT}/`,
     library: _.camelize(pkg.name),
@@ -87,7 +86,7 @@ module.exports = {
         test: /\.(png|jpg|gif|svg|jpeg)$/,
         loader: 'file-loader',
         options: {
-          name: `${distBasePath}/[name][hash].[ext]`,
+          name: '[name][hash].[ext]',
         },
       },
     ]),
@@ -123,15 +122,15 @@ module.exports = {
       files: ['**/*.s?(a|c)ss', 'src/**/**/*.vue', 'src/***/*.css'],
       // files: '../static/.css'
     }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: 'index.html',
-    //   chunks: ['index'],
-    //   showErrors: true,
-    //   hash: false,
-    //   inject: true,
-    //   chunksSortMode: 'dependency',
-    // }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'index.html',
+      chunks: ['index'],
+      showErrors: true,
+      hash: false,
+      inject: true,
+      chunksSortMode: 'dependency',
+    }),
   ],
 };
 
@@ -143,7 +142,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  // module.exports.devtool = '#source-map';
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     qiniuPluginAssets,
@@ -151,7 +149,7 @@ if (process.env.NODE_ENV === 'production') {
     // https://segmentfault.com/q/1010000008716379
     new ExtractTextPlugin({
       disable: false,
-      filename: `${distBasePath}/[name].css`,
+      filename: '[name].css',
     }),
     new CompressionWebpackPlugin({
       asset: '[path].gz[query]',

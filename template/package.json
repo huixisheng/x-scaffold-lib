@@ -9,13 +9,22 @@
     "eslint": "cross-env NODE_ENV=production node_modules/eslint/bin/eslint.js --max-warnings 10 --ext .js,.vue static src build config test fis-conf.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --color --progress",
     "build:dev": "cross-env NODE_ENV=development webpack --progress --hide-modules --colors",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --colors"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --colors",
+    "preinstall": "git config --local commit.template ./.gitmessage",
+    "commitmsg": "commitlint -e $GIT_PARAMS"
   },
   "keywords": [],
   "author": "{{author}}",
   "license": "MIT",
   "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run eslint"
+    }
+  },
   "devDependencies": {
+    "@commitlint/cli": "^6.1.3",
+    "@commitlint/config-angular": "^6.1.3",
     "@x-scaffold/webpack-config": "*",
     "autoprefixer": "^8.1.0",
     "babel-core": "^6.0.0",
@@ -37,6 +46,7 @@
     "eslint-loader": "^2.0.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.11",
+    "husky": "^0.15.0-rc.13",
     "html-webpack-plugin": "^3.0.6",
     "ip": "^1.1.5",
     "mocha": "^5.0.4",
