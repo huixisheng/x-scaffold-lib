@@ -33,5 +33,6 @@ module.exports = {
     // https://eslint.cn/docs/rules/guard-for-in
     'guard-for-in': 'off',
     // specify the maximum length of a line in your program
+    'class-methods-use-this': 'off',
   },
 };

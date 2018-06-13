@@ -4,7 +4,7 @@
 # <body>用于详细描述本次变更的内容
 #
 # <footer>提供解决问题的文章地址或者测试的链接地址
-# 例如: closes #traup_id fix #traup_id  http://test.h5.cosmeapp.net/group/thread/250411
+# 例如: closes #issue fix #issue
 #
 # <type类型>
 #    build: 构建工具生成资源
@@ -19,7 +19,6 @@
 #    ci: 更改我们的持续集成文件和脚本（范围：Jenkins Travis）
 #
 # <scope提交代码影响范围。如果存在多个用、分割>
-#    ops、h5、(api|apiApp)、mhome、library、config(配置修改)、scripts、b2b、shop、apiClock、apiDocs、
 #
 # https://segmentfault.com/a/1190000004282514
 # https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines

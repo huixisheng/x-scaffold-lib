@@ -1,19 +1,11 @@
-console.log('hello huixisheng');
+class ClassName {
+  constructor() {
+    console.log('hello huixisheng');
+  }
 
-// import packages from './packages';
+  add(a, b) {
+    return a + b;
+  }
+}
 
-// const install = function (Vue) {
-//   Object.keys(packages).forEach((key) => {
-//     Vue.component(packages[key].name, packages[key]);
-//   });
-// };
-
-// // auto install
-// if (typeof window !== 'undefined' && window.Vue) {
-//   install(window.Vue);
-// }
-
-// export default {
-//   install,
-//   ...packages,
-// };
+export default ClassName;
