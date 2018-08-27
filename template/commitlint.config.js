@@ -8,7 +8,7 @@ module.exports = {
     'scope-case': [2, 'always', 'camel-case'], // scope驼峰
     'subject-empty': [2, 'never'], // subjec不为空
     'subject-full-stop': [2, 'never', '.'], // subject结尾不加'.'
-    'subject-tense': [1, 'always', ['present-imperative']], //以动词开头，使用第一人称现在时，比如change，而不是changed或changes
+    'subject-tense': [1, 'always', ['present-imperative']], // 以动词开头，使用第一人称现在时，比如change，而不是changed或changes
     'type-case': [2, 'always', 'lowerCase'], // type小写
     'type-empty': [2, 'never'], // type不为空
     'type-enum': [
@@ -25,10 +25,10 @@ module.exports = {
         'refactor',
         'revert',
         'style',
-        'test'
-      ]
-    ]
-  }
+        'test',
+      ],
+    ],
+  },
 };
 /**
  * ref
